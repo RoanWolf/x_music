@@ -1,4 +1,5 @@
 import 'package:client/core/theme/app_pallete.dart';
+import 'package:client/features/auth/model/auth_remote_repository.dart';
 import 'package:flutter/material.dart';
 import '../widgets/custom_filed.dart';
 import '../widgets/auth_gradient_button.dart';
@@ -23,11 +24,12 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   // Todo
-  void _submitForm() {
+  void _submitForm() async {
     if (formKey.currentState!.validate()) {
-      print('验证成功！开始注册...');
-
-      print('Email: ${emailController.text}');
+      await AuthRemoteRepository().login(
+        email: emailController.text,
+        password: passwordController.text,
+      );
     }
   }
 

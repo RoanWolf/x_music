@@ -2,6 +2,7 @@ import 'package:client/core/theme/app_pallete.dart';
 import 'package:flutter/material.dart';
 import '../widgets/custom_filed.dart';
 import '../widgets/auth_gradient_button.dart';
+import '../../model/auth_remote_repository.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -22,15 +23,6 @@ class _SignupPageState extends State<SignupPage> {
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
-  }
-
-  // Todo
-  void _submitForm() {
-    if (formKey.currentState!.validate()) {
-      print('验证成功！开始注册...');
-      print('Name: ${nameController.text}');
-      print('Email: ${emailController.text}');
-    }
   }
 
   @override
@@ -61,7 +53,13 @@ class _SignupPageState extends State<SignupPage> {
               ),
               const SizedBox(height: 20),
               AuthGradientButton(
-                onPressed: _submitForm, 
+                onPressed: () async {
+                  await AuthRemoteRepository().registerUser(
+                    name: nameController.text,
+                    email: emailController.text,
+                    password: passwordController.text,
+                  );
+                },
                 buttonText: 'Sign up',
               ),
               const SizedBox(height: 20),
