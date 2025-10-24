@@ -5,7 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "tsc --noEmit && dotenvx run -- tsx ./src/server.ts"
+    "dev": "tsc --noEmit && dotenvx run -- tsx ./src/server.ts",
+    "migrate": "dotenvx run -- npx prisma migrate dev --name init"
   },
   "keywords": [],
   "author": "",
@@ -19,11 +20,13 @@
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^1.51.0",
+    "@types/bcrypt": "^6.0.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "express": "^5.1.0",
+    "jose": "^6.1.0",
     "jsonwebtoken": "^9.0.2"
   }
 }

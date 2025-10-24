@@ -1,21 +1,9 @@
-import { CreateUserRequest, LoginUserRequest } from "./type/authType.ts";
-import type { Response } from "express";
-import express from "express";
-import cors from "cors";
-const app = express();
-app.use(cors());
-app.use(express.json());
+import app from "./app.ts";
 
-app.post("/signup", (req: CreateUserRequest, res: Response) => {
-  const { name, email, password } = req.body;
-  return res.json({ name, email, password });
-});
 
-app.post("/login", (req: LoginUserRequest, res: Response) => {
-  const { email, password } = req.body;
-  return res.json({ email, password });
-});
+const PORT = process.env.PORT || 3000;
 
-app.listen(3000, () => {
+
+app.listen(PORT, () => {
   console.log("ok");
 });
