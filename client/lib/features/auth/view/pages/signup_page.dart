@@ -56,13 +56,15 @@ class _SignupPageState extends State<SignupPage> {
               const SizedBox(height: 20),
               AuthGradientButton(
                 onPressed: () async {
-                  final res = await AuthRemoteRepository().registerUser(
-                    name: nameController.text,
-                    email: emailController.text,
-                    password: passwordController.text,
-                  );
+                  if (formKey.currentState!.validate()) {
+                    final res = await AuthRemoteRepository().registerUser(
+                      name: nameController.text,
+                      email: emailController.text,
+                      password: passwordController.text,
+                    );
 
-                  print(res);
+                    print(res);
+                  }
                 },
                 buttonText: 'Sign up',
               ),

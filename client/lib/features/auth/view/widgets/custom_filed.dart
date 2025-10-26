@@ -21,6 +21,17 @@ class CustomField extends StatelessWidget {
         if (val == null || val.trim().isEmpty) {
           return "$hintText is missing";
         }
+
+        if (hintText == "Email") {
+          if (!val.contains("@")) {
+            return "Invalid Email";
+          }
+        }
+
+        if (hintText == "Password" && val.length < 6) {
+          return "Password must be at least 6 characters";
+        }
+
         return null;
       },
     );
