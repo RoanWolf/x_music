@@ -21,15 +21,6 @@ class CustomField extends StatelessWidget {
         if (val == null || val.trim().isEmpty) {
           return "$hintText is missing";
         }
-
-        final emailRegex = RegExp(
-          r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
-        );
-        
-        if (!emailRegex.hasMatch(val.trim())) {
-          return "Please enter a valid email address";
-        }
-
         return null;
       },
     );

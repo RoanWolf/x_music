@@ -14,5 +14,8 @@ class AppTheme {
       enabledBorder: _border(Pallete.borderColor),
       focusedBorder: _border(Pallete.gradient1),
     ),
+    textTheme: ThemeData.dark().textTheme.copyWith(
+      titleMedium: const TextStyle(fontSize: 18, color: Pallete.inactiveSeekColor),
+    ),
   );
 }

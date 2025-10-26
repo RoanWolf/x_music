@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { isEmail } from "validator";
+import validator from "validator";
 
 import { CreateUserRequest, LoginUserRequest } from "../type/authType.ts";
 import { userService } from "../services/userService.ts";
@@ -12,7 +12,7 @@ export const userController = {
     const { name, email, password } = req.body;
 
     try {
-      if (!isEmail(email)) {
+      if (!validator.isEmail(email)) {
         return res.status(400).json({ msg: "Invalid email" });
       }
 
@@ -24,13 +24,21 @@ export const userController = {
 
       const passwordHash: string = await hashPassword(password);
 
-      await userService.createUser({
+      const user = await userService.createUser({
         name,
         email,
         password: passwordHash,
       });
 
-      res.json({ msg: "Signup successful" });
+      res.status(200).json({
+        msg: "Signup successful",
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+        },
+      });
+
     } catch (err: any) {
       res.status(400).json({ msg: "error occurred! Please try again later." });
     }
@@ -46,7 +54,15 @@ export const userController = {
       }
 
       const token = await authService.generateToken(user.id);
-      return res.json({ token, msg: "Login successful" });
+      return res.status(200).json({
+        token,
+        msg: "Login successful",
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+        },
+      });
     } catch (err: any) {
       res.status(400).json({ msg: "error occurred! Please try again later." });
     }

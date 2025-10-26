@@ -1,3 +1,4 @@
+import 'package:client/core/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'features/auth/view/pages/signup_page.dart';
 import 'features/auth/view/pages/login_page.dart';
@@ -16,7 +17,13 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: AppTheme.darkThemeMode,
-      home: SignupPage(),
+      routes: {
+        '/': (context) => const LoginPage(),
+        AppRoutes.login: (context) => LoginPage(),
+        AppRoutes.signup: (context) => SignupPage(),
+      },
+      initialRoute: '/',
     );
   }
 }
+

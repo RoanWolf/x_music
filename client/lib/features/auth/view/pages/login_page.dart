@@ -1,5 +1,7 @@
+import 'package:client/core/router/app_router.dart';
 import 'package:client/core/theme/app_pallete.dart';
-import 'package:client/features/auth/model/auth_remote_repository.dart';
+import 'package:client/features/auth/repositories/auth_remote_repository.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import '../widgets/custom_filed.dart';
 import '../widgets/auth_gradient_button.dart';
@@ -21,16 +23,6 @@ class _LoginPageState extends State<LoginPage> {
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
-  }
-
-  // Todo
-  void _submitForm() async {
-    if (formKey.currentState!.validate()) {
-      await AuthRemoteRepository().login(
-        email: emailController.text,
-        password: passwordController.text,
-      );
-    }
   }
 
   @override
@@ -60,7 +52,14 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 20),
               AuthGradientButton(
-                onPressed: _submitForm,
+                onPressed: () async {
+                  final res = await AuthRemoteRepository().login(
+                    email: emailController.text,
+                    password: passwordController.text,
+                  );
+
+                  print(res);
+                },
                 buttonText: 'Login in',
               ),
               const SizedBox(height: 20),
@@ -75,6 +74,12 @@ class _LoginPageState extends State<LoginPage> {
                         color: Pallete.gradient3,
                         fontWeight: FontWeight.w500,
                       ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Navigator.of(
+                            context,
+                          ).pushReplacementNamed(AppRoutes.signup);
+                        },
                     ),
                   ],
                 ),

@@ -1,8 +1,10 @@
+import 'package:client/core/router/app_router.dart';
 import 'package:client/core/theme/app_pallete.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import '../widgets/custom_filed.dart';
 import '../widgets/auth_gradient_button.dart';
-import '../../model/auth_remote_repository.dart';
+import '../../repositories/auth_remote_repository.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -54,11 +56,13 @@ class _SignupPageState extends State<SignupPage> {
               const SizedBox(height: 20),
               AuthGradientButton(
                 onPressed: () async {
-                  await AuthRemoteRepository().registerUser(
+                  final res = await AuthRemoteRepository().registerUser(
                     name: nameController.text,
                     email: emailController.text,
                     password: passwordController.text,
                   );
+
+                  print(res);
                 },
                 buttonText: 'Sign up',
               ),
@@ -74,6 +78,12 @@ class _SignupPageState extends State<SignupPage> {
                         color: Pallete.gradient3,
                         fontWeight: FontWeight.w500,
                       ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Navigator.of(
+                            context,
+                          ).pushReplacementNamed(AppRoutes.login);
+                        },
                     ),
                   ],
                 ),
