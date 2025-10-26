@@ -1,4 +1,5 @@
 import type { Request, Response } from "express";
+import { isEmail } from "validator";
 
 import { CreateUserRequest, LoginUserRequest } from "../type/authType.ts";
 import { userService } from "../services/userService.ts";
@@ -11,6 +12,10 @@ export const userController = {
     const { name, email, password } = req.body;
 
     try {
+      if (!isEmail(email)) {
+        return res.status(400).json({ msg: "Invalid email" });
+      }
+
       const haveUser = await userService.queryUserByEmail(email);
 
       if (haveUser) {
@@ -19,7 +24,7 @@ export const userController = {
 
       const passwordHash: string = await hashPassword(password);
 
-      const newUser = await userService.createUser({
+      await userService.createUser({
         name,
         email,
         password: passwordHash,

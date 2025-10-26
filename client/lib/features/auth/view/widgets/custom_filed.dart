@@ -8,7 +8,7 @@ class CustomField extends StatelessWidget {
     super.key,
     required this.hintText,
     required this.controller,
-    this.isObscureText = false
+    this.isObscureText = false,
   });
 
   @override
@@ -17,12 +17,21 @@ class CustomField extends StatelessWidget {
       decoration: InputDecoration(hint: Text(hintText)),
       controller: controller,
       obscureText: isObscureText,
-      validator: (val){
-        if(val == null || val.trim().isEmpty){
-            return "$hintText is missing";
+      validator: (val) {
+        if (val == null || val.trim().isEmpty) {
+          return "$hintText is missing";
         }
+
+        final emailRegex = RegExp(
+          r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
+        );
+        
+        if (!emailRegex.hasMatch(val.trim())) {
+          return "Please enter a valid email address";
+        }
+
         return null;
-      }
+      },
     );
   }
 }
