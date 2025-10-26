@@ -1,5 +1,8 @@
 import 'package:client/core/router/app_router.dart';
+import 'package:client/features/home/home.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 import 'features/auth/view/pages/signup_page.dart';
 import 'features/auth/view/pages/login_page.dart';
 import './core/theme/theme.dart';
@@ -13,17 +16,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: AppTheme.darkThemeMode,
-      routes: {
-        '/': (context) => const LoginPage(),
-        AppRoutes.login: (context) => LoginPage(),
-        AppRoutes.signup: (context) => SignupPage(),
-      },
-      initialRoute: '/',
+
+      getPages: [
+        GetPage(name: '/', page: () => const LoginPage()),
+        GetPage(name: AppRoutes.login, page: () => LoginPage()),
+        GetPage(name: AppRoutes.signup, page: () => SignupPage()),
+        GetPage(name: AppRoutes.home, page: () => Home()),
+        GetPage(name: AppRoutes.other, page: () => Other()),
+      ],
+      initialRoute: AppRoutes.login,
     );
   }
 }
-

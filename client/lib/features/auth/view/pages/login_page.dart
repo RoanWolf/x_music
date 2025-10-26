@@ -1,10 +1,11 @@
-import 'package:client/core/router/app_router.dart';
-import 'package:client/core/theme/app_pallete.dart';
-import 'package:client/features/auth/repositories/auth_remote_repository.dart';
+import 'package:client/features/auth/view/widgets/auth_gradient_button.dart';
+import 'package:client/features/auth/view/widgets/custom_filed.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import '../widgets/custom_filed.dart';
-import '../widgets/auth_gradient_button.dart';
+import 'package:get/get.dart';
+import 'package:client/core/router/app_router.dart';
+import 'package:client/core/theme/app_pallete.dart';
+import 'package:client/features/auth/controller/auth_controller.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -17,6 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  final authController = Get.put(AuthController());
 
   @override
   void dispose() {
@@ -54,12 +56,10 @@ class _LoginPageState extends State<LoginPage> {
               AuthGradientButton(
                 onPressed: () async {
                   if (formKey.currentState!.validate()) {
-                    final res = await AuthRemoteRepository().login(
-                      email: emailController.text,
-                      password: passwordController.text,
+                    await authController.login(
+                      emailController.text,
+                      passwordController.text,
                     );
-
-                    print(res);
                   }
                 },
                 buttonText: 'Login in',
@@ -77,11 +77,7 @@ class _LoginPageState extends State<LoginPage> {
                         fontWeight: FontWeight.w500,
                       ),
                       recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          Navigator.of(
-                            context,
-                          ).pushReplacementNamed(AppRoutes.signup);
-                        },
+                        ..onTap = () => Get.offNamed(AppRoutes.signup),
                     ),
                   ],
                 ),

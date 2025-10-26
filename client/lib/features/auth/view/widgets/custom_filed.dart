@@ -28,9 +28,9 @@ class CustomField extends StatelessWidget {
           }
         }
 
-        if (hintText == "Password" && val.length < 6) {
-          return "Password must be at least 6 characters";
-        }
+        // if (hintText == "Password" && val.length < 6) {
+        //   return "Password must be at least 6 characters";
+        // }
 
         return null;
       },
