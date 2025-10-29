@@ -2,6 +2,7 @@ import 'package:client/features/auth/view/widgets/auth_gradient_button.dart';
 import 'package:client/features/auth/view/widgets/custom_filed.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:get/get.dart';
 import 'package:client/core/router/app_router.dart';
 import 'package:client/core/theme/app_pallete.dart';
@@ -31,59 +32,75 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(15.0),
+      body: Obx(
+        () => Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(15.0),
 
-        child: Form(
-          key: formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                'Login In.',
-                style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 30),
-
-              CustomField(hintText: 'Email', controller: emailController),
-              const SizedBox(height: 15),
-              CustomField(
-                hintText: 'Password',
-                controller: passwordController,
-                isObscureText: true,
-              ),
-              const SizedBox(height: 20),
-              AuthGradientButton(
-                onPressed: () async {
-                  if (formKey.currentState!.validate()) {
-                    await authController.login(
-                      emailController.text,
-                      passwordController.text,
-                    );
-                  }
-                },
-                buttonText: 'Login in',
-              ),
-              const SizedBox(height: 20),
-              RichText(
-                text: TextSpan(
-                  text: 'Don\'t have an account?  ',
-                  style: Theme.of(context).textTheme.titleMedium,
+              child: Form(
+                key: formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    TextSpan(
-                      text: 'Sign up',
+                    const Text(
+                      'Login In.',
                       style: TextStyle(
-                        color: Pallete.gradient3,
-                        fontWeight: FontWeight.w500,
+                        fontSize: 50,
+                        fontWeight: FontWeight.bold,
                       ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () => Get.offNamed(AppRoutes.signup),
+                    ),
+                    const SizedBox(height: 30),
+
+                    CustomField(hintText: 'Email', controller: emailController),
+                    const SizedBox(height: 15),
+                    CustomField(
+                      hintText: 'Password',
+                      controller: passwordController,
+                      isObscureText: true,
+                    ),
+                    const SizedBox(height: 20),
+                    AuthGradientButton(
+                      onPressed: () async {
+                        if (formKey.currentState!.validate()) {
+                          await authController.login(
+                            emailController.text,
+                            passwordController.text,
+                          );
+                        }
+                      },
+                      buttonText: 'Login in',
+                    ),
+                    const SizedBox(height: 20),
+                    RichText(
+                      text: TextSpan(
+                        text: 'Don\'t have an account?  ',
+                        style: Theme.of(context).textTheme.titleMedium,
+                        children: [
+                          TextSpan(
+                            text: 'Sign up',
+                            style: TextStyle(
+                              color: Pallete.gradient3,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () => Get.offNamed(AppRoutes.signup),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
               ),
-            ],
-          ),
+            ),
+            if (authController.isLoading.value)
+              Center(
+                child: LoadingAnimationWidget.halfTriangleDot(
+                  color: Pallete.whiteColor,
+                  size: 80,
+                ),
+              ),
+          ],
         ),
       ),
     );

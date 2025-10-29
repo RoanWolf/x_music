@@ -1,16 +1,16 @@
-# POST http://localhost:3000/v1/api/register
-# Content-Type: application/json
-
-# {
-#   "name": "Aice",
-#   "email": "adasdassso87m@dwfe.cefws",
-#   "password": "13456"
-# }
-
-POST http://localhost:3000/v1/api/login
+POST http://localhost:3000/v1/api/register
 Content-Type: application/json
 
 {
-  "email": "1@aa.aa",
-  "password": "1"
+  "name": "Aice",
+  "email": "adasdasssdsao87m@dwfe.cefws",
+  "password": "13456"
 }
+
+# POST http://localhost:3000/v1/api/login
+# Content-Type: application/json
+
+# {
+#   "email": "1@aa.aa",
+#   "password": "1"
+# }

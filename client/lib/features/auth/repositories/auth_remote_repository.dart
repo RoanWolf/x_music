@@ -9,6 +9,8 @@ class AuthRemoteRepository {
     required String email,
     required String password,
   }) async {
+
+
     const String url = 'http://10.0.2.2:3000/v1/api/login';
 
     try {
@@ -27,7 +29,7 @@ class AuthRemoteRepository {
       final userMap = resBody['user'] as Map<String, dynamic>;
       return Right(UserModel.fromMap(userMap));
     } catch (e) {
-      // print(e.toString());
+   
       return Left(AppFailure(e.toString()));
     }
   }

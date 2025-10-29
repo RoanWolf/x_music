@@ -23,19 +23,20 @@ export const userController = {
       }
 
       const passwordHash: string = await hashPassword(password);
-
+      
       const user = await userService.createUser({
         name,
         email,
         password: passwordHash,
       });
-
+      const token = await authService.generateToken(user.id);
       res.status(200).json({
         msg: "Signup successful",
         user: {
           id: user.id,
           name: user.name,
           email: user.email,
+          token: token,
         },
       });
 
@@ -55,12 +56,12 @@ export const userController = {
 
       const token = await authService.generateToken(user.id);
       return res.status(200).json({
-        token,
         msg: "Login successful",
         user: {
           id: user.id,
           name: user.name,
           email: user.email,
+          token: token,
         },
       });
     } catch (err: any) {
