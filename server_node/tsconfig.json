@@ -1,8 +1,8 @@
 {
- "extends": "@tsconfig/node-lts/tsconfig.json",
- "compilerOptions": {
+  "extends": "@tsconfig/node-lts/tsconfig.json",
+  "compilerOptions": {
     "allowImportingTsExtensions": true,
     "noEmit": true
- }
- 
+  },
+  "include": ["src/**/*"]
 }

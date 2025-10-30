@@ -28,9 +28,8 @@ class MyApp extends StatelessWidget {
         GetPage(name: AppRoutes.login, page: () => LoginPage()),
         GetPage(name: AppRoutes.signup, page: () => SignupPage()),
         GetPage(name: AppRoutes.home, page: () => Home()),
-        GetPage(name: AppRoutes.other, page: () => Other()),
       ],
-      initialRoute: AppRoutes.login,
+      initialRoute: AppRoutes.home,
     );
   }
 }
